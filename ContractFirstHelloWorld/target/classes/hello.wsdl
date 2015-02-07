@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/hello/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="hello" targetNamespace="http://www.example.org/hello/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/hello/">
+      <xsd:element name="sayHelloOperation">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="sayHelloOperationResponse1">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="out" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+            <xsd:element name="sayHello" type="xsd:string"></xsd:element>
+            <xsd:element name="sayHelloResponse" type="xsd:string"></xsd:element>
+        </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="sayHelloOperationRequest">
+  	<wsdl:part element="tns:sayHelloOperation" name="parameters" />
+  </wsdl:message>
+  <wsdl:message name="NewOperationResponse">
+    <wsdl:part element="tns:NewOperationResponse" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="sayHelloOperationResponse1">
+  	<wsdl:part name="parameters" element="tns:sayHelloOperationResponse1"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sayHelloMessage">
+  	<wsdl:part name="NewPart" element="tns:sayHello"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sayHelloResponseMessage">
+  	<wsdl:part name="NewPart" element="tns:sayHelloResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="HelloPort">
+  	<wsdl:operation name="sayHelloOperation">
+  		<wsdl:input message="tns:sayHelloMessage"></wsdl:input>
+  		<wsdl:output message="tns:sayHelloResponseMessage"></wsdl:output>
+  	</wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="helloSOAP" type="tns:HelloPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="sayHelloOperation">
+      <soap:operation soapAction="http://www.example.org/hello/sayHelloOperation"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="hello">
+    <wsdl:port binding="tns:helloSOAP" name="helloSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
